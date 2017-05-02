@@ -1,0 +1,28 @@
+# -*- mode: python; -*-
+
+# This SConscript describes build rules for the test.
+
+import itertools
+import os
+import re
+import sys
+
+environ = os.environ.copy()
+
+env = Environment(ENV = environ, CXX = environ.get('CXX', 'g++'), CC = environ.get('CC', 'gcc'))
+
+base_dir = [
+    '../src',
+    'thirdparty/catch/',
+]
+
+base_source = [
+    'test.cpp',
+]
+
+env.Append( CXXFLAGS = [ '-c', '-std=c++0x', ] )
+env.Append( LIBPATH = [ '/usr/local/lib/', ] )
+env.Append( CPPPATH = [ base_dir, ] )
+env.Append( CXXFLAGS = [ '-Wall', '-O0', '-Wextra', '-pedantic', '-g', ] )
+
+env.Program('test', base_source )
