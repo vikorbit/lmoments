@@ -39,3 +39,16 @@ int main( int argc, char **argv ) {
     return 0;
 }
 ```
+
+Building and running tests
+--------------------------
+
+### Requirements
+  * SCons ([http://scons.org/](http://scons.org/))
+
+### 1. Run SCons
+    scons -j 2
+
+### 2. Run Test
+    cd test
+    test
