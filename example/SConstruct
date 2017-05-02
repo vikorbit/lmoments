@@ -1,0 +1,37 @@
+# -*- mode: python; -*-
+
+# This SConscript describes build rules for the example project.
+
+# to build release version of utils:
+# $ ./scons build=release
+
+import itertools
+import os
+import re
+import sys
+
+environ = os.environ.copy()
+
+env = Environment(ENV = environ, CXX = environ.get('CXX', 'g++'), CC = environ.get('CC', 'gcc'))
+
+base_dir = [
+    '../src'
+]
+
+base_source = [
+    'example.cpp',
+]
+
+env.Append( CXXFLAGS = [ '-c', '-std=c++0x', ] )
+env.Append( LIBPATH = [ '/usr/local/lib/', ] )
+env.Append( CPPPATH = [ base_dir, ] )
+
+build = ARGUMENTS.get('build', 'debug')
+if build == 'release':
+    env.Append( CXXFLAGS = [ '-O3', '-Wextra', ] )
+elif build == 'debug':
+    env.Append( CXXFLAGS = [ '-Wall', '-O0', '-Wextra', '-pedantic', '-g', ] )
+else:
+    assert build in ('debug', 'release'), 'set build=debug or build=release'
+
+env.Program('example', base_source )
